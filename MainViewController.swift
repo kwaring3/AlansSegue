@@ -23,8 +23,10 @@ class MainViewController: UIViewController {
     
 }
 extension MainViewController: MainViewDelegate {
-    func buttonPressed() {
-        let detail = DetailViewController.init(message: "")
+    
+    
+    func buttonPressed(message: String) {
+        let detail = DetailViewController.init(message: message)
         navigationController?.pushViewController(detail, animated: true)
     }
 }

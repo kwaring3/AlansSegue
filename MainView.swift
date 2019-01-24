@@ -10,11 +10,11 @@ import UIKit
 
 
 protocol MainViewDelegate: AnyObject {
-    func buttonPressed()
+    func buttonPressed(message: String)
 }
 class MainView: UIView {
 
-    
+    var textMessage = "Enter a Message"
     weak var delegate : MainViewDelegate?
     
     
@@ -28,14 +28,16 @@ class MainView: UIView {
     
     lazy var textFeild: UITextField = {
         let textField = UITextField()
-        textField.text = "Enter text here"
+        textField.text = textMessage
+        //textField.text = "Enter text here"
         textField.isEnabled = true
         textField.textAlignment = .center
+        textField.delegate = self
         return textField
     }()
     
     @objc func buttonPressed() {
-    delegate?.buttonPressed()
+    delegate?.buttonPressed(message: textMessage)
     }
     
     override init(frame: CGRect) {
@@ -67,5 +69,19 @@ class MainView: UIView {
     
     
     
+}
+extension MainView: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.text == textMessage{
+            textField.text = ""
+        }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let message = textField.text {
+            textMessage = message
+            
+        }
+        return true
+    }
 }
 
